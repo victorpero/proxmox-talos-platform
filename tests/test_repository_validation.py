@@ -45,6 +45,7 @@ class ContentValidationTests(unittest.TestCase):
             'terraform.tfstate.backup', 'server.key', 'cluster.kubeconfig',
             'talosconfig-dev', 'secrets.yml', '.env', '.env.local',
             'private.tfvars', 'private.tfvars.json', '.terraform/settings',
+            'terraform/backend_override.tf', 'dev.backend.hcl',
         ):
             with self.subTest(name=name):
                 self.assertTrue(validation.file_errors(name, b''))
