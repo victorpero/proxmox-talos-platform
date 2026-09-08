@@ -1,0 +1,8 @@
+---
+# Documentation-only inventory. Do not use it to contact an existing environment.
+all:
+  children:
+    proxmox:
+      hosts:
+        pve-example-01:
+          ansible_host: pve.example.com
