@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  bootstrap:
+  validate:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -47,7 +47,7 @@ jobs:
           python3 -m venv .venv
           .venv/bin/python -m pip install -r requirements-dev.txt
 
-      - name: Validate public boundary, formatting, syntax, and bootstrap checks
+      - name: Validate public boundary, syntax, and Terraform environment tests
         run: |
           source .venv/bin/activate
           bash scripts/validate.sh
