@@ -1,0 +1,38 @@
+name: Repository hygiene
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - dev
+
+permissions:
+  contents: read
+
+jobs:
+  public-boundary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Reject private-network addresses in committed text
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -nE '(^|[^0-9])(10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|192\.168\.[0-9]{1,3}\.[0-9]{1,3}|172\.(1[6-9]|2[0-9]|3[01])\.[0-9]{1,3}\.[0-9]{1,3})([^0-9]|$)' -- ':!*.lock'; then
+            echo 'Private RFC1918 address found. Use documentation-only ranges in this public repository.'
+            exit 1
+          fi
+
+      - name: Reject generated access artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          forbidden='(^|/)(kubeconfig|talosconfig)([^/]*$)|\.(pem|p12|pfx)$|(^|/)secrets\.(ya?ml)$'
+          offending="$(git ls-files | grep -Ei "$forbidden" || true)"
+          if [ -n "$offending" ]; then
+            printf 'Forbidden generated or sensitive files are tracked:\n%s\n' "$offending"
+            exit 1
+          fi

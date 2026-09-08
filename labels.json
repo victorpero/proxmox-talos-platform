@@ -1,0 +1,102 @@
+[
+  {
+    "name": "type: infrastructure",
+    "color": "5319e7",
+    "description": "Platform, delivery, or operations work"
+  },
+  {
+    "name": "type: feature",
+    "color": "a2eeef",
+    "description": "New platform capability"
+  },
+  {
+    "name": "type: maintenance",
+    "color": "c5def5",
+    "description": "Quality, process, or internal improvement"
+  },
+  {
+    "name": "type: documentation",
+    "color": "0075ca",
+    "description": "Documentation and public presentation"
+  },
+  {
+    "name": "area: repository",
+    "color": "6f42c1",
+    "description": "Repository structure and project conventions"
+  },
+  {
+    "name": "area: terraform",
+    "color": "623ce4",
+    "description": "Terraform providers, modules, state, and environments"
+  },
+  {
+    "name": "area: proxmox",
+    "color": "e57000",
+    "description": "Proxmox infrastructure and VM lifecycle"
+  },
+  {
+    "name": "area: talos",
+    "color": "00a4ef",
+    "description": "Talos Linux image and machine configuration"
+  },
+  {
+    "name": "area: kubernetes",
+    "color": "326ce5",
+    "description": "Kubernetes cluster lifecycle and control plane"
+  },
+  {
+    "name": "area: ansible",
+    "color": "ee0000",
+    "description": "Ansible baseline, inventory, and validation"
+  },
+  {
+    "name": "area: networking",
+    "color": "1d76db",
+    "description": "Load balancing, ingress, and network behavior"
+  },
+  {
+    "name": "area: gitops",
+    "color": "006b75",
+    "description": "Flux and continuous reconciliation"
+  },
+  {
+    "name": "area: security",
+    "color": "b60205",
+    "description": "Secrets, RBAC, hardening, and trust boundaries"
+  },
+  {
+    "name": "area: observability",
+    "color": "fbca04",
+    "description": "Metrics, dashboards, alerts, and platform health"
+  },
+  {
+    "name": "area: ci",
+    "color": "0052cc",
+    "description": "Continuous integration and repository validation"
+  },
+  {
+    "name": "area: disaster-recovery",
+    "color": "d876e3",
+    "description": "Rebuild, recovery, and backup boundaries"
+  },
+  {
+    "name": "area: documentation",
+    "color": "0e8a16",
+    "description": "Architecture docs, runbooks, and portfolio presentation"
+  },
+  {
+    "name": "priority: p0",
+    "color": "d93f0b",
+    "description": "Foundational or release-blocking"
+  },
+  {
+    "name": "priority: p1",
+    "color": "fbca04",
+    "description": "Important follow-up work"
+  },
+  {
+    "name": "priority: p2",
+    "color": "0e8a16",
+    "description": "Useful enhancement"
+  }
+]
