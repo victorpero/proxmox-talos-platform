@@ -1,6 +1,6 @@
 # Fictional documentation values; never use these to target a real environment.
 platform = {
-  cluster_name     = "talos-dev"
+  cluster_name     = "talos-single"
   proxmox_endpoint = "https://pve.example.com:8006/"
   network = {
     cidr        = "192.0.2.0/24"
@@ -10,7 +10,7 @@ platform = {
   }
   nodes = {
     cp01 = {
-      vm_id       = 1101
+      vm_id       = 3101
       iso_file_id = "example-iso-storage:iso/talos-amd64.iso"
       tags        = ["dev"]
       role        = "control-plane"
@@ -19,20 +19,6 @@ platform = {
       bridge      = "vmbr-example"
       vlan_id     = null
       address     = "192.0.2.11"
-      cpu         = 4
-      memory_mib  = 8192
-      disk_gib    = 32
-    }
-    worker01 = {
-      vm_id       = 1102
-      iso_file_id = "example-iso-storage:iso/talos-amd64.iso"
-      tags        = ["dev"]
-      role        = "worker"
-      target_node = "pve-example-1"
-      datastore   = "example-vm-storage"
-      bridge      = "vmbr-example"
-      vlan_id     = null
-      address     = "192.0.2.21"
       cpu         = 4
       memory_mib  = 8192
       disk_gib    = 32

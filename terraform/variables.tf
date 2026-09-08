@@ -11,6 +11,11 @@ variable "platform" {
       dns_domain  = string
     })
     nodes = map(object({
+      vm_id       = number
+      iso_file_id = string
+      tags        = optional(set(string), [])
+      started     = optional(bool, true)
+      on_boot     = optional(bool, true)
       role        = string
       target_node = string
       datastore   = string
@@ -85,13 +90,12 @@ variable "platform" {
   validation {
     condition = try(
       contains([1, 3, 5], length([for node in var.platform.nodes : node if node.role == "control-plane"])) &&
-      length([for node in var.platform.nodes : node if node.role == "worker"]) >= 1 &&
       alltrue([for name, node in var.platform.nodes :
         can(regex("^[a-z][a-z0-9-]{0,61}[a-z0-9]$|^[a-z]$", name)) &&
         contains(["control-plane", "worker"], node.role)
       ]), false
     )
-    error_message = "nodes requires 1, 3, or 5 control-plane nodes and at least one worker; keys must be lowercase DNS labels starting with a letter and roles must be control-plane or worker."
+    error_message = "nodes requires 1, 3, or 5 control-plane nodes; workers are optional; keys must be lowercase DNS labels starting with a letter and roles must be control-plane or worker."
   }
 
   validation {

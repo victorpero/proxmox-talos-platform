@@ -1,6 +1,12 @@
 # Every run plans with a mock provider: no API access or infrastructure changes.
-# Supply either committed example using terraform test -var-file=... .
+# Supply the dev or prod example using terraform test -var-file=... .
+# Isolate environment errors; vms.tftest.hcl tests real module wiring and inputs.
 mock_provider "proxmox" {}
+
+override_module {
+  target  = module.vms
+  outputs = { nodes = {} }
+}
 
 variable "platform" {
   type = any
@@ -232,14 +238,13 @@ run "reject_null_node" {
   expect_failures = [var.platform]
 }
 
-run "reject_no_workers" {
+run "valid_control_planes_without_workers" {
   command = plan
   variables {
     platform = merge(var.platform, {
       nodes = { for name, node in var.platform.nodes : name => node if node.role == "control-plane" }
     })
   }
-  expect_failures = [var.platform]
 }
 
 run "reject_two_control_planes" {
@@ -549,7 +554,7 @@ run "valid_five_control_planes_and_tagged_vlan" {
       nodes = merge(
         { for name, node in var.platform.nodes : name => node if node.role == "worker" },
         { for index in range(1, 6) : "cp${index}" => merge(var.platform.nodes.cp01, {
-          address = cidrhost(var.platform.network.cidr, 10 + index), vlan_id = 4094
+          address = cidrhost(var.platform.network.cidr, 10 + index), vlan_id = 4094, vm_id = 4000 + index
         }) }
       )
     })
