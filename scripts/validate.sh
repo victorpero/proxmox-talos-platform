@@ -22,4 +22,6 @@ while IFS= read -r -d '' tracked_file; do
   esac
 done < <(git ls-files -z)
 
-echo 'Bootstrap checks passed. Provider, Ansible, and Kubernetes validation arrive with their implementations (PTP-02/PTP-06/PTP-09/PTP-12).'
+python3 scripts/validate_terraform.py
+
+echo 'Repository and Terraform checks passed. Ansible and Kubernetes validation arrive with PTP-06/PTP-09/PTP-12.'

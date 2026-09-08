@@ -25,7 +25,8 @@ IPV6 = re.compile(r'(?<![\w:])(?:[\da-fA-F]*:){2,}[\da-fA-F:.]*(?:/\d{1,3})?(?![
 MAC = re.compile(r'(?i)(?<![\w:])(?:[0-9a-f]{2}[:-]){5}[0-9a-f]{2}(?![\w:])')
 SENSITIVE_NAME = re.compile(
     r'(?i)(^|/)(?:kubeconfig[^/]*|talosconfig[^/]*|secrets\.ya?ml|'
-    r'\.env(?:\..*)?|\.vault_password)$|'
+    r'\.env(?:\..*)?|\.vault_password|backend_override\.tf)$|'
+    r'\.backend\.hcl$|'
     r'\.(?:pem|key|p12|pfx|agekey|kubeconfig|talosconfig|tfplan)$|'
     r'\.tfstate(?:\..*)?$|\.sops\.ya?ml\.dec$'
 )
