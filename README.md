@@ -112,7 +112,7 @@ alone do not prevent direct pushes.
 
 ## Validation from a clean checkout
 
-Prerequisites: Git, Bash, Python 3.9 or newer with `venv`, and Terraform 1.13.3
+Prerequisites: Git, Bash, Python 3.10 or newer with `venv`, and Terraform 1.13.3
 (the version used by CI). Install Terraform using the
 [official installation instructions](https://developer.hashicorp.com/terraform/install).
 
