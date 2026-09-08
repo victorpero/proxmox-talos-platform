@@ -8,7 +8,10 @@ crash.*.log
 .terraform.lock.hcl.bak
 *.auto.tfvars
 *.auto.tfvars.json
+*.tfvars
+*.tfvars.json
 !*.example.tfvars
+!*.example.tfvars.json
 
 # Credentials and generated access files
 *.pem
@@ -20,6 +23,10 @@ talosconfig*
 secrets.yaml
 secrets.yml
 *.sops.yaml.dec
+*.sops.yml.dec
+*.kubeconfig
+*.talosconfig
+*.agekey
 
 # Ansible
 *.retry
@@ -28,11 +35,9 @@ ansible/.vault_password
 # Local environment
 .env
 .env.*
-!.env.example
 .DS_Store
 .idea/
 .vscode/
-
-# Local notes
-memory.md
-MEMORY.md
+.venv/
+__pycache__/
+*.py[cod]
