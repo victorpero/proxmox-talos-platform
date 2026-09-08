@@ -10,6 +10,9 @@ platform = {
   }
   nodes = {
     cp01 = {
+      vm_id       = 2101
+      iso_file_id = "example-iso-storage:iso/talos-amd64.iso"
+      tags        = ["prod"]
       role        = "control-plane"
       target_node = "pve-example-1"
       datastore   = "example-vm-storage"
@@ -21,6 +24,9 @@ platform = {
       disk_gib    = 32
     }
     cp02 = {
+      vm_id       = 2102
+      iso_file_id = "example-iso-storage:iso/talos-amd64.iso"
+      tags        = ["prod"]
       role        = "control-plane"
       target_node = "pve-example-2"
       datastore   = "example-vm-storage"
@@ -32,6 +38,9 @@ platform = {
       disk_gib    = 32
     }
     cp03 = {
+      vm_id       = 2103
+      iso_file_id = "example-iso-storage:iso/talos-amd64.iso"
+      tags        = ["prod"]
       role        = "control-plane"
       target_node = "pve-example-3"
       datastore   = "example-vm-storage"
@@ -43,6 +52,9 @@ platform = {
       disk_gib    = 32
     }
     worker01 = {
+      vm_id       = 2104
+      iso_file_id = "example-iso-storage:iso/talos-amd64.iso"
+      tags        = ["prod"]
       role        = "worker"
       target_node = "pve-example-1"
       datastore   = "example-vm-storage"
@@ -54,6 +66,9 @@ platform = {
       disk_gib    = 32
     }
     worker02 = {
+      vm_id       = 2105
+      iso_file_id = "example-iso-storage:iso/talos-amd64.iso"
+      tags        = ["prod"]
       role        = "worker"
       target_node = "pve-example-2"
       datastore   = "example-vm-storage"

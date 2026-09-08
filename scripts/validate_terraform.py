@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validate staged Terraform in isolation, without local state or credentials."""
 
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -38,10 +39,45 @@ def main():
 
         terraform('init', '-backend=false', '-input=false', '-lockfile=readonly')
         terraform('validate')
+
+        def test_example(name, *filters):
+            plans = {}
+            command = ['terraform', 'test', '-json', '-verbose', *filters,
+                       f'-var-file=environments/{name}/platform.example.tfvars']
+            with subprocess.Popen(command, cwd=root / 'terraform', env=environment,
+                                  stdout=subprocess.PIPE, text=True) as process:
+                for line in process.stdout:
+                    event = json.loads(line)
+                    if event.get('type') == 'test_plan':
+                        if event.get('@testfile') == 'tests/vms.tftest.hcl':
+                            plans[event['@testrun']] = event['test_plan'].get('resource_changes', [])
+                    else:
+                        print(event.get('@message', ''), flush=True)
+                        if event.get('type') == 'diagnostic':
+                            print(event['diagnostic'].get('detail', ''), flush=True)
+                if process.wait():
+                    raise subprocess.CalledProcessError(process.returncode, command)
+
+            baseline = plans['module_vm_contract']
+            if not baseline or baseline != plans['unchanged_inputs_preserve_metadata']:
+                raise RuntimeError(f'{name}: repeated VM plans differ')
+            if any(item['change']['actions'] != ['create'] for item in baseline):
+                raise RuntimeError(f'{name}: a fresh VM plan must only create resources')
+            expanded = {item['address']: item for item in plans['added_node_preserves_existing_identity']}
+            if len(expanded) != len(baseline) + 1 or any(
+                    expanded.get(item['address']) != item for item in baseline):
+                raise RuntimeError(f'{name}: adding a VM changed an existing resource plan')
+            reduced = plans['single_control_plane_vm']
+            if len(reduced) != 1 or reduced[0] not in baseline:
+                raise RuntimeError(f'{name}: reducing the topology changed the retained VM')
+            print(f'{name}: identical repeated resource plans; adding/removing nodes preserves retained VM plans.')
+
         for name in ('dev', 'prod'):
             print(f'Validating {name} example with mocked, plan-only tests.', flush=True)
-            terraform('test', f'-var-file=environments/{name}/platform.example.tfvars')
-    print('Terraform provider validation and both environment test suites passed.')
+            test_example(name)
+        print('Validating the single-node example with mocked VM plans.', flush=True)
+        test_example('single-node', '-filter=tests/vms.tftest.hcl')
+    print('Terraform provider validation and all environment test suites passed.')
 
 
 if __name__ == '__main__':

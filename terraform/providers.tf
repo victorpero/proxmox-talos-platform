@@ -1,5 +1,5 @@
 # Credentials are read by the provider from PROXMOX_VE_API_TOKEN at runtime.
-# This foundation declares no resources, data sources, or SSH configuration.
+# Guest creation uses the API only; ISO files are staged outside this module.
 provider "proxmox" {
   endpoint = var.platform.proxmox_endpoint
   insecure = false
